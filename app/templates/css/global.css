@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Playwrite+CU+Guides&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Jost", sans-serif;
+    background-color: rgba(221, 242, 252, 0.692);
+    color: var(--font-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+:root {
+    --primary-color: #82a5c9;
+    --secondary-color: #3775ac;
+    --terciary-color: #dbe7f09f;
+    --font-color: #F7F7F7;
+    --btn-hover-color: #285e8e;
+}
+
+.container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 60%;
+    max-width: 900px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+.transcription-box {
+    background: var(--terciary-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: auto;
+    flex-direction: column;
+}
+
+.transcription-box-p, .translation-box-p {
+    font-size: 20pt;
+    color: var(--secondary-color);
+    margin: 1rem;
+}
+
+.btns-transcriptors {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--font-color);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--btn-hover-color);
+}
+
+#startBtn {
+    background-color: var(--primary-color);
+}
+
+#startBtn:hover {
+    background-color: var(--btn-hover-color);
+}
+
+#stopBtn {
+    background-color: var(--secondary-color);
+}
+
+#stopBtn:hover {
+    background-color: var(--btn-hover-color);
+}

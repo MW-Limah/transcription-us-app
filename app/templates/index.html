@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transcrição em Tempo Real</title>
+    <link rel="stylesheet" href="./css/global.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Transcrição em Tempo Real</h1>
+
+      <div class="transcription-box">
+        <p class="transcription-box-p">
+          <strong>Transcrição:</strong> <span id="transcription"></span>
+        </p>
+        <p class="translation-box-p">
+          <strong>Tradução:</strong> <span id="translation"></span>
+        </p>
+      </div>
+
+      <div class="btns-transcriptors">
+        <button id="startBtn"><i class="fa-solid fa-microphone"></i></button>
+        <button id="stopBtn" disabled>
+          <i class="fa-solid fa-microphone-slash"></i>
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+      // Configuração do WebSocket
+      const socket = io("http://127.0.0.1:5001"); // Altere a porta se necessário
+      let mediaRecorder; // Variável global para o MediaRecorder
+
+      // Botões
+      const startBtn = document.getElementById("startBtn");
+      const stopBtn = document.getElementById("stopBtn");
+
+      // Iniciar a captura de áudio
+      startBtn.addEventListener("click", async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+
+          // Inicializa o MediaRecorder
+          mediaRecorder = new MediaRecorder(stream);
+
+          // Configura o evento para capturar dados
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              event.data.arrayBuffer().then((buffer) => {
+                console.log("Enviando dados de áudio...");
+                socket.emit("stream_audio", { audio: buffer });
+              });
+            }
+          };
+
+          // Inicia a gravação
+          mediaRecorder.start();
+          console.log("Gravação iniciada.");
+
+          // Habilita/desabilita botões
+          startBtn.disabled = true;
+          stopBtn.disabled = false;
+        } catch (error) {
+          console.error("Erro ao acessar o microfone:", error);
+          alert(
+            "Não foi possível acessar o microfone. Verifique as permissões."
+          );
+        }
+      });
+
+      // Parar a captura de áudio
+      stopBtn.addEventListener("click", () => {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          console.log("Gravação parada.");
+        }
+
+        // Habilita/desabilita botões
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+      });
+
+      // Receber a transcrição e tradução do backend
+      socket.on("transcription", (data) => {
+        document.getElementById("transcription").textContent =
+          data.transcription;
+        document.getElementById("translation").textContent = data.translation;
+      });
+
+      // Lidar com erros
+      socket.on("error", (error) => {
+        console.error("Erro ao processar o áudio:", error);
+        alert("Erro ao processar o áudio: " + error.error);
+      });
+    </script>
+  </body>
+</html>
