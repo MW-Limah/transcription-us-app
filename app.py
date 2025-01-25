@@ -1,5 +1,7 @@
 import eventlet
 eventlet.monkey_patch()
+import torch
+torch.cuda.empty_cache()
 
 from flask import Flask, send_from_directory, request
 from flask_socketio import SocketIO, emit

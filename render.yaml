@@ -3,4 +3,4 @@ services:
     name: TranscricaoApp
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app -k eventlet --bind 0.0.0.0:5001"
+    startCommand: "gunicorn app:app -k eventlet --workers=1 --threads=2 --bind 0.0.0.0:5001 --timeout 120"
