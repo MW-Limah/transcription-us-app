@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask, send_from_directory, request
 from flask_socketio import SocketIO, emit
 from services.speech_to_text import transcribe_audio
