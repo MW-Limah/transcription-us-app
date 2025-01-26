@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+*.log
+temp/
+node_modules/
+venv/
+.env
+test_convert_to_wav.py

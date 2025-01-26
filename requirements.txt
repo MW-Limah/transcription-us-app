@@ -6,3 +6,5 @@ googletrans==4.0.0-rc1
 pydub==0.25.1
 git+https://github.com/openai/whisper.git
 gunicorn==21.2.0
+torch==2.5.1+cpu
+
