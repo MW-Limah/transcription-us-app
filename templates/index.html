@@ -34,7 +34,9 @@
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script>
       // Configuração do WebSocket
-      const socket = io.connect("https://transcription-us-app.onrender.com");
+      const socket = io.connect(
+        "https://transcription-app-811186895565.herokuapp.com/"
+      );
       // Altere a porta se necessário
       let mediaRecorder; // Variável global para o MediaRecorder
 

@@ -36,6 +36,7 @@ warnings.filterwarnings("ignore", category=UserWarning, message="FP16 is not sup
 app = Flask(__name__, static_folder="templates", static_url_path="/")
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
 
+
 # Endpoint para servir arquivos estáticos (Frontend)
 @app.route('/')
 def serve_index():
@@ -84,4 +85,5 @@ def handle_stream(data):
 
 # Inicialização do servidor
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5001, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, host='0.0.0.0', port=port)
